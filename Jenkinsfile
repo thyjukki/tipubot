@@ -1,9 +1,13 @@
 pipeline {
-  agent any
+  agent {
+    label "linux"
+  }
   stages {
-    stage("temp") {
+    stage("SonarQube Analysis") {
       steps {
-        echo "hello world"
+        withSonarQubeEnv('SonarQube Jukki') {
+          sh "${tool 'Sonarscanner_latest'}/bin/sonar-scanner"
+        }
       }
     }
   }
